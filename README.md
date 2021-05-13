@@ -1,2 +1,2 @@
 # cleanroom_monitor_humidity
-How to setup humidity (and temperature) sensors to send measurements via Bluetooth to a central point that sends the data to a webpage.
+This project shows how to monitor humidity and temperature of an ISO 7 cleanroom. Sensors connected to ESP32 boards send data via Bluetooth to a central point (Raspberry Pi 4) that sends the data to a webpage.
