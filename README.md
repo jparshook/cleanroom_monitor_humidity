@@ -43,7 +43,7 @@ Connect the sensor to the ESP32 with the jumper wires according the the pinouts.
 - The ESP32 can now be moved from the computer to wall or battery power.
 
 ## Raspberry Pi setup
-Any RPi with Bluetooth should work for this project. In this case, RPi4 was used. 
+Any RPi with Bluetooth should work for this project. In this case, RPi4 was used. **The instructions below are for connecting Bluetooth for Raspian V10 Buster and may not apply to other versions of the Raspberry Pi OS.**
 
 ### Initial Setup
 - [Install the Raspbian OS and connect to WiFi.](https://www.canakit.com/Media/CanaKit-Raspberry-Pi-Quick-Start-Guide-4.0.pdf) If WiFi is not available, use an Ethernet cable to connect to the Internet for the next step.
