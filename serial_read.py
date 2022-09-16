@@ -15,7 +15,7 @@ def connect_to_sensor():                                    # function to connec
     time.sleep(5)                                                       # 5-second delay
     subproc1.kill()
     rfcomm_num = 0                                          # initialize rfcomm channel to 0
-    MAC_addrs = ["24:62:AB:FD:6A:AA","24:62:AB:FC:98:06"]   # list of ESP32 MAC addresses
+    MAC_addrs = ["XX:XX:XX:XX:XX:XX","XX:XX:XX:XX:XX:XX"]   # list of ESP32 MAC addresses
     sers = []                                               # create a blank list for storing serial connections
     for MAC_addr in MAC_addrs:                              # repeat these steps for each MAC address
         subproc = subprocess.Popen("sudo rfcomm connect " + str(rfcomm_num) + " " + MAC_addr + " 1", shell=True)    # runs commands via terminal
