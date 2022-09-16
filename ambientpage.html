@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8409 Ambient Humidity</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="icon" href="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpng-1.findicons.com%2Ffiles%2Ficons%2F2770%2Fios_7_icons%2F128%2Ftemperature.png&f=1&nofb=1">
+</head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+    var lasthrtimes = [];
+    var lasthrhumidities = [];
+    function connectSensor(){
+        fetch('ambientsensordata.txt') 
+        .then(response => response.text())
+        .then(text => {
+            var data = text.split("\n");
+	    
+	    for (let i = data.length-60; i<data.length-1;i++){
+	        lasthrtimes.push(data[i].split(", ")[1])
+	    }
+	    
+	    for (let i = data.length-60; i<data.length;i++){
+		lasthrhumidities.push(parseFloat(data[i].split(", ")[3]))
+	    }
+	    
+	    new Chart("myChart", {
+  		type: "line",
+  		axisX: {
+		    valueFormatString: "HH:mm:ss"
+		},
+		name: "Test stand humidity",
+		showInLegend: true,
+  		data: {
+    		    labels: lasthrtimes,
+    		    datasets: [{
+      		        fill: false,
+      		        lineTension: 0,
+      		        backgroundColor: "DarkSlateGray",
+      		        borderColor: "rgba(47, 79, 79, 0.3)",
+      		        label: "Relative Humidity",
+      		        data: lasthrhumidities
+    		    }]
+  		},
+  		options: {
+    		    legend: {display: true},
+    		    scales: {
+      			yAxes: [{ticks: {min: -5, max:50}}],
+    		    }
+  		},
+	    });
+        
+        document.getElementById("dateLabel").innerHTML = data[data.length-2].split(", ")[0];
+	    document.getElementById("timeLabel").innerHTML = data[data.length-2].split(", ")[1];
+	    document.getElementById("humidLabel").innerHTML = data[data.length-2].split(", ")[3];
+	    document.getElementById("tempLabel").innerHTML = data[data.length-2].split(", ")[2];
+	   
+        });
+    }
+</script>
+
+<body onload="connectSensor()">
+    <nav>
+	<div class="heading">
+	    <h4>8409 Humidity Sensors</h4>
+	</div>
+	<ul class="nav-links">
+	    <li><a href="index.html">Dry Box</a></li>
+	    <li><a class= "active" href="ambientpage.html">Ambient</a></li>
+	</ul>
+    </nav>
+    <div class="body-text">
+            <h2>Current Reading: <span style = "color:CadetBlue;"> Ambient</span></h2>
+	    <p style="color:CadetBlue;">Last recorded date: <span id="dateLabel">?</span></p>
+	    <p style="color:CadetBlue;">Last recorded time: <span id="timeLabel">?</span></p>
+	    <p style="color:CadetBlue;">Relative humidity: <span id="humidLabel">?</span></p>
+	    <p style="color:CadetBlue;">Temperature: <span id="tempLabel">?</span> °C</p>
+        </div>
+
+	<div class="body-text">
+	    <h2>Historical Humidity Readings</h2>
+
+	    <h3>Last 30 Mins</h3>
+
+	    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+	    Click <a href="ambientsensordata.txt">here</a> to see all data for the ambient sensor.
+	</div>
+</body>
+</html>
